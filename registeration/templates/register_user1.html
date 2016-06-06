@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-{%  load staticfiles %}
 {% load register_extras %}
+{%  load staticfiles %}
 <html lang="en">
 <head>
     <link rel="stylesheet" href="{%  static 'css/bootstrap.min.css' %}" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous"><!-- Optional theme -->
@@ -12,7 +12,7 @@
 </head>
 <body>
 <form class="form-horizontal well" id="registerForm" method="POST"
-          					enctype="multipart/form-data" action="{% url 'registeration_user' %}">
+          					enctype="multipart/form-data" action="{% url 'login' %}">
           					<fieldset>
           							{% csrf_token %} {% load tz %}
           							{% for field in form.visible_fields %}
