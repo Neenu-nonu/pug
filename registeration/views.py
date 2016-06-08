@@ -6,10 +6,16 @@ from django.views.generic.edit import FormView, UpdateView
 from registeration.forms import *# Create your views here.
 from registeration import settings
 from django.shortcuts import redirect
+from django.views.generic import ListView
+from django.views.generic import DetailView
 
 
-class Home(TemplateView):
+
+class Home(ListView):
    template_name="index.html"
+
+   def get_queryset(self):
+       return Chocolate.objects.all()
 
 class UserRegistrationView(AnonymousRequiredMixin, FormView):
    template_name = "register_user.html"
@@ -33,8 +39,20 @@ def anonymous_required(func):
 class AddChocolateView(FormView):
     template_name = "add_chocolate.html"
     form_class = ChocolateAddForm
-    success_url = '/registeration/chocolate/success'
+    success_url = '/registeration/user/success'
 
     def form_valid(self, form):
         form.save()
         return FormView.form_valid(self, form)
+
+
+class ChocolateDetailsView(DetailView):
+    template_name = "chocolate_details.html"
+
+    def get_object(self, queryset=None):
+        choco_id = self.kwargs['choco_id']
+        obj = Chocolate.objects.get(id=choco_id)
+        if obj:
+            return obj
+        else:
+            raise Http404("No details Found.")
